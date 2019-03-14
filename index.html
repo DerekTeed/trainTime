@@ -10,7 +10,7 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-  <link rel="stylesheet" type="text/css" href="css/train.css">
+ <!-- <link rel="stylesheet" type="text/css" href="css/train.css"> -->
 
 </head>
 
@@ -29,35 +29,32 @@
 
   <div class="row">
 
-
-    <div class="input-field col s12 m4 l3">
-      <input id="trainName" type="text" class="">
-      <label for="name">Train Name</label>
-    </div>
-
-
-    <div class="input-field col s12 m4 l3">
-      <input id="destination" type="text">
-      <label for="destination">Destination</label>
-    </div>
+    <form>
+      <div class="input-field col s12 m4 l3">
+        <input id="trainName" type="text" class="">
+        <label for="name">Train Name</label>
+      </div>
 
 
-    <div class="input-field col s12 m4 l3">
-     
-        <input type="time" step="60" class="form-control" id="trainTime">
-      <input type="text" class="form-control" id="arrival" placeholder="First Train Time(24:00)">First Train Arrival</input>
-    </div>
+      <div class="input-field col s12 m4 l3">
+        <input id="destination" type="text">
+        <label for="destination">Destination</label>
+      </div>
 
+      <div class="form-group input-field col s12 m4 l3">
+          <label for="start-input">First Train Time</label>
+          <input step="60" class="form-control" id="arrival"  type="time">
+        </div>
 
-    <div class="input-field col s12 m4 l3">
-      <input id="mins" type="text" class="">
-      <label for="something">Time Between Trains(mins)</label>
-    </div>
-
+      <div class="input-field col s12 m4 l3">
+        <input id="mins" type="text" class="">
+        <label for="something">Time Between Trains(mins)</label>
+      </div>
+    </form>
 
     <div class="col s12 m8 l9">
       <!-- Note that "m8 l9" was added -->
-      <table class="table">
+      <table class="table" id='employee-table'>
         <thead>
           <tr>
             <th id="trainName2">Train Name</th>
@@ -86,125 +83,10 @@
 
   <!-- Link to Moment.js should go here -->
   <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-
-
-  <script>
-   // document.addEventListener('DOMContentLoaded', function () {
- ///     var elems = document.querySelectorAll('.timepicker');
-
- //     var instances = M.Timepicker.init(elems, { onSelect: hoursMins });
-  //    var instances = M.Timepicker.init(elems, { fromNow: 1000 });
-      
-  //  });//End of eventlistener
-
-    //Function convert hours and minutes from timepicker in materialize
-    var hoursMins = function (H, M) {
-      M = M.toString();
-      if (M.length === 1) {
-        M = "0" + M;
-      }
-      var formatHrsMins = H + ":" + M;
-
-      console.log(M.length);
-      console.log(formatHrsMins);
-    }
-    $(document).ready(function () {
-      // initialize firebase
+  <script src="train.js"></script>
 
 
 
-
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyBh8te4gC0cyQFhei95_tTbP9lGZTtA2Z4",
-        authDomain: "train-schedule-15135.firebaseapp.com",
-        databaseURL: "https://train-schedule-15135.firebaseio.com",
-        projectId: "train-schedule-15135",
-        storageBucket: "train-schedule-15135.appspot.com",
-        messagingSenderId: "231067745769"
-      };
-      firebase.initializeApp(config);
-
-
-      var renderConversion = function () {
-        //PUT ALL THIS INTO CLICK FUNCTION WHEN READY!!!
-        //var firstArrivalExample = "04:30";
-        //  var arrivalConvertExample = moment(firstArrivalExample, "HH:mm");
-        // console.log(arrivalConvertExample);
-        var timeNow = moment();
-        console.log(timeNow);
-        // var firstTimeConverted = moment(timeNow, "HH:mm").subtract(1, "years");
-        // console.log(firstTimeConverted);
-        // Current time converted to hh:mm
-        var timeNowConverted = moment(timeNow, "HH:mm").format("hh:mm");
-        //working
-        console.log(timeNowConverted);
-        //
-        // Difference between the timeNow and firstTrain
-        //taking time given to input
-        var arrivalTime = $("#arrival").val();
-        var firstTime = moment(arrivalTime).val();
-
-	var frequency = $("#frequency").val().trim();
-
-		var arrivalTime = moment.unix(firstTime).format("hh:mm");
-		//calculate difference between times
-		var difference =  moment().diff(moment(trainTime),"minutes");
-
-		//time apart(remainder)
-		var trainRemain = difference % frequency;
-
-		//minutes until arrival
-		var minUntil = frequency - trainRemain;
-
-		//next arrival time
-		var nextArrival = moment().add(minUntil, "minutes").format('hh:mm');
-
-
-
-      }
-
-      // This function handles events where the add animal button is clicked
-      $("#button").on("click", function (event) {
-        event.preventDefault();
-        renderConversion();
-        // This line of code will grab the input from the textbox
-        //good to stay here
-        var trainName = $("#trainName").val();
-        var destination = $("#destination").val();
-        var arrivalTime = $("#arrival").val();
-        var minFrequency = $("#mins").val();
-        
-        $("#tbody > tbody").append("<tr><td>" + trainName + "</td><td>" 
-+ destination + "</td><td>" + arrivalTime + "</td><td>" 
-+ minFrequency + "</td><td>" + diffTime + "</td></tr>");
-
-        //good to stay here but didnt work
-       // $("#trainName2").push(trainName);
-       // $("#destination2").push(destination);
-       // $("#arrival2").push(arrivalTime);
-       // $("#frequency2").push(minFrequency);
-       //$("#nextTrain2").push(diffTime);
-
-
-
-
-
-
-
-        // NEED TO RENDER A FUNCTION HERE TO PROCESS CALCULATIONS AND CONVERsIONS
-        
-
-
-
-
-
-
-      });
-    });
-
-
-  </script>
   </div>
 </body>
 
